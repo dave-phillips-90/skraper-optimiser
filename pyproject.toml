@@ -1,0 +1,143 @@
+# ---- Project Info and Dependencies ----
+[project.urls]
+Repository = "https://github.com/dave-phillips-90/scraper-optimiser"
+
+[project]
+name = "skraper-optimiser"
+authors = [
+  { name = "Dave Phillips", email = "david.sr.phillips@outlook.com" },
+]
+description = "All-in-one tool for optimising output of Skraper images, videos and other media"
+license = { file = "LICENSE" }
+requires-python = ">=3.11,<4.0"
+dynamic = ["version"]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    # "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Typing :: Typed",
+    # Include this to avoid accidentally publishing to PyPI:
+    "Private :: Do Not Upload",
+]
+
+# ---- Main dependencies ----
+dependencies = [
+]
+
+# ---- Dev dependencies ----
+[dependency-groups]
+dev = [
+    "basedpyright>=1.37.2",
+    "codespell>=2.4.1",
+    "funlog>=0.2.1",
+    "pytest>=9.0.2",
+    "pytest-benchmark>=5.2.3",
+    "pytest-sugar>=1.1.1",
+    "rich>=15.0.0",
+    "ruff>=0.14.14",
+]
+
+[project.scripts]
+ntsc-cu = "skraper_optimiser.cli:main" # CLI entry point
+
+[project.gui-scripts]
+ntsc-cu-gui = "skraper_optimiser.gui:main" # GUI entry point
+
+# ---- Build system ----
+
+# Dynamic versioning from:
+# https://github.com/ninoseki/uv-dynamic-versioning/
+
+[build-system]
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+# Note JSON schemas don't seem to be right for tool.hatch.version.source so
+# this may cause false warnings in IDEs.
+# https://github.com/ninoseki/uv-dynamic-versioning/issues/21
+
+[tool.uv-dynamic-versioning]
+vcs = "git"
+style = "pep440"
+bump = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/skraper_optimiser"] # The source location for the package.
+
+
+# ---- Settings ----
+[tool.ruff]
+# Matches black standard line length
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E", "W",  # pycodestyle
+    "F",       # Pyflakes
+    "I",       # isort
+    "B",       # flake8-bugbear
+    "UP",      # pyupgrade
+    "S",       # flake8-bandit
+    "SIM",     # flake8-simplify
+    "PTH",     # flake8-use-pathlib
+    "N",       # pep8-naming
+    "RUF",     # Ruff-specific rules
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"] # Disable assert warnings for test files
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-single-line = false
+lines-after-imports = 2
+known-first-party = ["skraper_optimiser"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+
+
+[tool.basedpyright]
+include = ["src", "tests"]
+
+executionEnvironments = [
+  { root = "tests", reportOptionalSubscript = "none", reportArgumentType = "none", reportUnknownMemberType = "none" }
+]
+
+reportIgnoreCommentWithoutRule = false
+reportUnnecessaryTypeIgnoreComment = false
+
+reportMissingTypeStubs = false
+reportUnusedCallResult = false
+reportAny = false
+reportExplicitAny = false
+reportImplicitStringConcatenation = false
+reportUnreachable = false
+# reportPrivateImportUsage = false
+# reportPrivateLocalImportUsage = false
+# reportMissingImports = false
+# reportUnnecessaryIsInstance = false
+# reportUnknownVariableType = false
+# reportUnknownArgumentType = false
+
+[tool.codespell]
+# Add here as needed:
+# ignore-words-list = "foo,bar"
+# skip = "foo.py,bar.py"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+python_files = ["*.py"]
+python_classes = ["Test*", "Benchmark*"]
+python_functions = ["test_*", "benchmark_*"]
+testpaths = [
+    "tests",
+    "benchmarks"
+]
+norecursedirs = []
+filterwarnings = []
