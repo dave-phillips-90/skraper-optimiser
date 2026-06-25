@@ -3,7 +3,7 @@
 Repository = "https://github.com/dave-phillips-90/scraper-optimiser"
 
 [project]
-name = "skraper-optimiser"
+name = "skraper_optimiser"
 authors = [
   { name = "Dave Phillips", email = "david.sr.phillips@outlook.com" },
 ]
@@ -13,7 +13,8 @@ requires-python = ">=3.11,<4.0"
 dynamic = ["version"]
 
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
+    # "Development Status :: 4 - Beta",
     # "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Operating System :: OS Independent",
@@ -27,6 +28,8 @@ classifiers = [
 
 # ---- Main dependencies ----
 dependencies = [
+    "pngquant-cli>=3.0.3",
+    "pydantic-xml>=2.21.0",
 ]
 
 # ---- Dev dependencies ----
@@ -43,10 +46,10 @@ dev = [
 ]
 
 [project.scripts]
-ntsc-cu = "skraper_optimiser.cli:main" # CLI entry point
+skraperoptimizer = "skraper_optimiser.__main__:main" # CLI entry point
 
 [project.gui-scripts]
-ntsc-cu-gui = "skraper_optimiser.gui:main" # GUI entry point
+skraperoptimizer-gui = "skraper_optimiser.gui:main" # GUI entry point
 
 # ---- Build system ----
 
