@@ -218,3 +218,8 @@ __marimo__/
 .streamlit/secrets.toml
 
 src/ntsc_cu
+
+# Keep examples directory clean of generated files
+examples
+!examples/quantize_files.py
+!examples/file_example_PNG.png
